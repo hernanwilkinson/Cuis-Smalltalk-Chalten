@@ -1,5 +1,6 @@
 # Cuis-Smalltalk-Chalten
-Implementation of a rich Gregorian calendar model
+Implementation of a rich Gregorian calendar model.
+It depends on Aconcagua (https://github.com/hernanwilkinson/Cuis-Smalltalk-Aconcagua)
 
 ## Why a new model of Dates?
 This model was created due to the Smalltalk-80's model problems. That model does not provide good solutions to all possible time related problems mainly because:
@@ -8,10 +9,6 @@ Time objects are not immutable (i.e., Time) therefore, they do not properly mode
 The ANSI Smalltalk model adds some abstractions but it is based on the Smalltalk one and have the same problems.
 The Chronology package has some issues also (from our point of view).
 For a complete description of the problems see the paper we presented at ESUG 2005 called "A New Object-Oriented Model of the Gregorian Calendar".
-You can download the presentation from:
-http://prog2.vub.ac.be/~cderoove/esugtalks/Wilkinson.pdf
-and the paper from:
-http://www.iam.unibe.ch/publikationen/techreports/2005/iam-05-001/file/at_download
 
 ## What's the metaphor behind the model?
 We used a metaphor to understand the time domain. In this metaphor, time entities are points in a line, a line that represents the passing time. The observers of that line can zoom in and out the points it contains. When the observer zooms in she sees smaller points (i.e., dates), when the observer zooms out she sees bigger points (i.e., years). We say that the time line has different scales or that time lines of different scale can represent the passing time.
@@ -19,9 +16,9 @@ Let’s see an example. A year represents a point in time but with less resoluti
 
 ## What are the principal abstractions?
 PointInTime
-|_______GregorianDateBehavior
+|_______GregorianDate
 	|_______FilteredGregorianDate
-	|_______GregorianDate
+	|_______FixedGregorianDate
 	|_______RelativeGregorianDate
 |_______GregorianDateTime
 |_______GregorianDay
