@@ -181,7 +181,7 @@ nonWorkingDays includes: (July sixteenth, 2005) “Returns true, it is Saturday�
 ## What is a RelativeGregorianDate?
 In the financial domain, settlement dates are usually expressed as a distance from the trade date in a given calendar. For example, a trader can buy bonds on a Thursday, but the settlement date is set to happen within 48 hours using the clearing house’s calendar. That usually means that the trader’s institution will receive the bonds on the next Monday, but this is true only if that Monday is a working day and it could have been true at the time the operation was done. But sometimes non-working days are created due to non-expected events (i.e., the death of some important person) and a working day is declared to be non-working.
 In our example, if Monday is declared as non-working day, the new settlement date for the trade will be Tuesday. To model this new type of entity we created an abstraction called RelativeGregorianDate that is a date relative to a time line filter given a certain time span. See Code Sample 20 for an example. Note that the settle date is declared using the negated non-working days filter because settlements can occur only on working days.
-```Samalltalk
+```Smalltalk
 “06/01/2005 is a Thursday”
 aTimespan := GregorianTimespan from: (January sixth, 2005) duration: 48 hours.
 aSettleDate := RelativeGregorianDate timespan: aTimespan calendar: nonWorkingDays negated.
