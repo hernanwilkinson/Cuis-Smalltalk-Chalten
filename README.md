@@ -15,41 +15,9 @@ We used a metaphor to understand the time domain. In this metaphor, time entitie
 Let’s see an example. A year represents a point in time but with less resolution than a date. If the year is zoomed in, new points are observed; those points are the months of that year. If one of those points is picked and zoomed in, the points representing the dates of that month are obtained. If one of this dates is selected and zoomed in, points representing the hour of that date are obtained. Let’s do it with concrete entities. If the year 2005 is selected and zoomed in, months from January of 2005 to December of 2005 appear. If January of 2005 is zoomed in, dates from January 1st of 2005 to January 31st of 2005 are seen. If January 1st of 2005 is zoomed in, the entities January 1st of 2005 at 00: 00: 00 to January 1st of 2005 at 23:59:59 are seen.
 
 ## What are the principal abstractions?
-![PointInTime Hierarchy]
-https://github.com/hernanwilkinson/Cuis-Smalltalk-Chalten/tree/master/doc/PointInTimeHierarchy.png
-PointInTime
-|_______GregorianDate
-	|_______FilteredGregorianDate
-	|_______FixedGregorianDate
-	|_______RelativeGregorianDate
-|_______GregorianDateTime
-|_______GregorianDay
-|_______GregorianDayOfMonth
-|_______GregorianMonth
-	|_______FebruaryGregorianMonth
-	|_______ThirtyDaysGregorianMonth
-	|_______ThirtyOneDaysGregorianMonth
-		|_______JanuaryGregorianMonth
-		|_______NonSpecificThirtyOneDaysGregorianMonth
-|_______GregorianMonthOfYear
-|_______GregorianYear
-	|_______GregorianLeapYear
-	|_______GregorianNonLeapYear
-|_______TimeOfDay
-TimeUnits
-
-TimeLineFilterBehavior
-|_______NegatedTimeLineFilter
-|_______TimeLineFilter
-TimeLineFilterStream
-InclusionRule
-|_______ArgentineLaw23555Rule
-|_______CardinalDayMonthRule
-|_______DayOfMonthRule
-|_______IntervalConstrainedInclusionRule
-|_______PluggableInclusionRule
-|_______SpecificDayRule
-|_______SpecificObjectInclusionRule
+![PointInTime Hierarchy](/doc/PointInTimeHierarchy.png)
+![TimeLineFilter Hierarchy](/doc/TimeLineFilterHierarchy.png)
+![InclusionRule Hierarchy](/doc/InclusionRuleHierarchy.png)
 
 ## What's the behavior that the model provides?
 Not only the metaphor helped us to understand the problem and create a model based on it, but it also allowed us to easily define the expected behaviour of the model, such as:
