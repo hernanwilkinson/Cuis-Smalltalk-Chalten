@@ -15,8 +15,11 @@ We used a metaphor to understand the time domain. In this metaphor, time entitie
 Let’s see an example. A year represents a point in time but with less resolution than a date. If the year is zoomed in, new points are observed; those points are the months of that year. If one of those points is picked and zoomed in, the points representing the dates of that month are obtained. If one of this dates is selected and zoomed in, points representing the hour of that date are obtained. Let’s do it with concrete entities. If the year 2005 is selected and zoomed in, months from January of 2005 to December of 2005 appear. If January of 2005 is zoomed in, dates from January 1st of 2005 to January 31st of 2005 are seen. If January 1st of 2005 is zoomed in, the entities January 1st of 2005 at 00: 00: 00 to January 1st of 2005 at 23:59:59 are seen.
 
 ## What are the principal abstractions?
+### PointInTime Hierarchy
 ![PointInTime Hierarchy](/doc/PointInTimeHierarchy.png)
+### TimeLineFilter Hierarchy
 ![TimeLineFilter Hierarchy](/doc/TimeLineFilterHierarchy.png)
+### InclusionRule Hierarchy
 ![InclusionRule Hierarchy](/doc/InclusionRuleHierarchy.png)
 
 ## What's the behavior that the model provides?
