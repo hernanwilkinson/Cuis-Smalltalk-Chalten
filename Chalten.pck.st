@@ -1,11 +1,11 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3064] on 27 March 2017 at 10:09:46 am'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3147] on 22 August 2017 at 4:41:30 pm'!
 'Description Implementatio of a rich Gregorian calendar model. Depends on Aconcagua.
 
 Presented at ESUG 2005: https://www.dropbox.com/s/kjczqs05jk9olk7/article.pdf?dl=0
 Here is a FAQ on how to use it: https://www.dropbox.com/s/6y3uipc6r3x80or/Chalten%20FAQ.doc?dl=0
 
 It has some changes to the paper but there are some more I''d like to do like less exceptions and better tests'!
-!provides: 'Chalten' 1 3!
+!provides: 'Chalten' 1 5!
 !requires: 'Aconcagua' 1 1 nil!
 !classDefinition: #PointInTime category: #'Chalten-TimeModel'!
 IntervalAwareMagnitude subclass: #PointInTime
@@ -27,6 +27,16 @@ PointInTime subclass: #GregorianDate
 GregorianDate class
 	instanceVariableNames: ''!
 
+!classDefinition: #FixedGregorianDate category: #'Chalten-TimeModel'!
+GregorianDate subclass: #FixedGregorianDate
+	instanceVariableNames: 'dayNumber monthOfYear'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeModel'!
+!classDefinition: 'FixedGregorianDate class' category: #'Chalten-TimeModel'!
+FixedGregorianDate class
+	instanceVariableNames: 'theBeginningOfTime theEndOfTime'!
+
 !classDefinition: #FilteredGregorianDate category: #'Chalten-TimeLineFilterModel'!
 GregorianDate subclass: #FilteredGregorianDate
 	instanceVariableNames: 'date timeLineFilter'
@@ -46,16 +56,6 @@ GregorianDate subclass: #RelativeGregorianDate
 !classDefinition: 'RelativeGregorianDate class' category: #'Chalten-TimeLineFilterModel'!
 RelativeGregorianDate class
 	instanceVariableNames: ''!
-
-!classDefinition: #FixedGregorianDate category: #'Chalten-TimeModel'!
-GregorianDate subclass: #FixedGregorianDate
-	instanceVariableNames: 'dayNumber monthOfYear'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeModel'!
-!classDefinition: 'FixedGregorianDate class' category: #'Chalten-TimeModel'!
-FixedGregorianDate class
-	instanceVariableNames: 'theBeginningOfTime theEndOfTime'!
 
 !classDefinition: #GregorianDateTime category: #'Chalten-TimeModel'!
 PointInTime subclass: #GregorianDateTime
@@ -217,26 +217,6 @@ Stream subclass: #TimeLineFilterStream
 TimeLineFilterStream class
 	instanceVariableNames: ''!
 
-!classDefinition: #DateNotIncludedInTimeLineFilterException category: #'Chalten-TimeLineFilterModel'!
-Error subclass: #DateNotIncludedInTimeLineFilterException
-	instanceVariableNames: 'date timeLineFilter'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeLineFilterModel'!
-!classDefinition: 'DateNotIncludedInTimeLineFilterException class' category: #'Chalten-TimeLineFilterModel'!
-DateNotIncludedInTimeLineFilterException class
-	instanceVariableNames: ''!
-
-!classDefinition: #NotIterateUniverseException category: #'Chalten-TimeLineFilterModel'!
-Error subclass: #NotIterateUniverseException
-	instanceVariableNames: 'universe'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeLineFilterModel'!
-!classDefinition: 'NotIterateUniverseException class' category: #'Chalten-TimeLineFilterModel'!
-NotIterateUniverseException class
-	instanceVariableNames: ''!
-
 !classDefinition: #InvalidDayOfMonthException category: #'Chalten-TimeModel'!
 Error subclass: #InvalidDayOfMonthException
 	instanceVariableNames: 'month dayNumber'
@@ -315,6 +295,26 @@ Error subclass: #InvalidTimeOfDayException
 	category: 'Chalten-TimeModel'!
 !classDefinition: 'InvalidTimeOfDayException class' category: #'Chalten-TimeModel'!
 InvalidTimeOfDayException class
+	instanceVariableNames: ''!
+
+!classDefinition: #DateNotIncludedInTimeLineFilterException category: #'Chalten-TimeLineFilterModel'!
+Error subclass: #DateNotIncludedInTimeLineFilterException
+	instanceVariableNames: 'date timeLineFilter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeLineFilterModel'!
+!classDefinition: 'DateNotIncludedInTimeLineFilterException class' category: #'Chalten-TimeLineFilterModel'!
+DateNotIncludedInTimeLineFilterException class
+	instanceVariableNames: ''!
+
+!classDefinition: #NotIterateUniverseException category: #'Chalten-TimeLineFilterModel'!
+Error subclass: #NotIterateUniverseException
+	instanceVariableNames: 'universe'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeLineFilterModel'!
+!classDefinition: 'NotIterateUniverseException class' category: #'Chalten-TimeLineFilterModel'!
+NotIterateUniverseException class
 	instanceVariableNames: ''!
 
 !classDefinition: #AllDatesUniverseTest category: #'Chalten-TimeLineFilterModelTests'!
@@ -657,6 +657,36 @@ PointInTimeIntervalStrategy subclass: #RoundedTimelineIntervalStrategy
 RoundedTimelineIntervalStrategy class
 	instanceVariableNames: 'uniqueInstance'!
 
+!classDefinition: #GregorianTimespan category: #'Chalten-TimeModel'!
+Object subclass: #GregorianTimespan
+	instanceVariableNames: 'from duration'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeModel'!
+!classDefinition: 'GregorianTimespan class' category: #'Chalten-TimeModel'!
+GregorianTimespan class
+	instanceVariableNames: ''!
+
+!classDefinition: #TimeModelInitialization category: #'Chalten-TimeModel'!
+Object subclass: #TimeModelInitialization
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeModel'!
+!classDefinition: 'TimeModelInitialization class' category: #'Chalten-TimeModel'!
+TimeModelInitialization class
+	instanceVariableNames: ''!
+
+!classDefinition: #TimeUnits category: #'Chalten-TimeModel'!
+Object subclass: #TimeUnits
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Chalten-TimeModel'!
+!classDefinition: 'TimeUnits class' category: #'Chalten-TimeModel'!
+TimeUnits class
+	instanceVariableNames: 'day hour minute second millisecond week month year'!
+
 !classDefinition: #InclusionRule category: #'Chalten-TimeLineFilterModel'!
 Object subclass: #InclusionRule
 	instanceVariableNames: ''
@@ -807,47 +837,17 @@ Universe subclass: #NaturalNumbersTestUniverse
 NaturalNumbersTestUniverse class
 	instanceVariableNames: 'uniqueInstance'!
 
-!classDefinition: #GregorianTimespan category: #'Chalten-TimeModel'!
-Object subclass: #GregorianTimespan
-	instanceVariableNames: 'from duration'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeModel'!
-!classDefinition: 'GregorianTimespan class' category: #'Chalten-TimeModel'!
-GregorianTimespan class
-	instanceVariableNames: ''!
-
-!classDefinition: #TimeModelInitialization category: #'Chalten-TimeModel'!
-Object subclass: #TimeModelInitialization
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeModel'!
-!classDefinition: 'TimeModelInitialization class' category: #'Chalten-TimeModel'!
-TimeModelInitialization class
-	instanceVariableNames: ''!
-
-!classDefinition: #TimeUnits category: #'Chalten-TimeModel'!
-Object subclass: #TimeUnits
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Chalten-TimeModel'!
-!classDefinition: 'TimeUnits class' category: #'Chalten-TimeModel'!
-TimeUnits class
-	instanceVariableNames: 'day hour minute second millisecond week month year'!
-
 
 !Object methodsFor: '*Chalten-Time Extensions'!
 isGregorianDate
 
 	^false! !
 
-!Time methodsFor: '*Chalten-Time Extensions' stamp: 'HAW 3/25/2017 18:16:56'!
+!Time methodsFor: '*Chalten-Time Extensions' stamp: 'HAW 8/22/2017 16:40:45'!
 asMilliseconds
 	"Answer the number of milliseconds since midnight"
 
-	^ self asDurationSinceMidnight totalMilliSeconds
+	^ self asDurationSinceMidnight totalMilliseconds
 ! !
 
 !PointInTime methodsFor: 'querying'!
@@ -1162,6 +1162,260 @@ to: aGregorianDate everyDayOfMonths: aCollectionOfGregorianDayOfMonth
 year
 	self subclassResponsibility! !
 
+!FixedGregorianDate methodsFor: 'magnitude protocol'!
+< aGregorianDate
+
+	^monthOfYear < aGregorianDate monthOfYear 
+		or: [ monthOfYear = aGregorianDate monthOfYear  and: [ dayNumber < aGregorianDate dayNumber ] ]! !
+
+!FixedGregorianDate methodsFor: 'comparing'!
+= anObject
+
+	| valuedObject |
+
+	self == anObject ifTrue: [^true].
+	anObject isGregorianDate ifFalse: [^false].
+	valuedObject := anObject value.
+
+	^dayNumber = valuedObject dayNumber and: [ monthOfYear = valuedObject monthOfYear ]! !
+
+!FixedGregorianDate methodsFor: 'visitor accepting'!
+accept: aVisitor 
+
+	^aVisitor visitGregorianDate: self! !
+
+!FixedGregorianDate methodsFor: 'accessing - days'!
+day
+	"I obtain the days from first of January of 1900.
+	Two days are added because first of January of 1900 it was Monday and as first day of the week is Sunday
+	and because later I must verify if it is necessary to complete one week.
+	I obtain the module respect to the amount of days per week and I add one to him so that the interval is from 1 to 7."
+	
+	| dayPositionInWeek |
+	
+	dayPositionInWeek := ((self numberOfDaysFromBaseDate + GregorianDay twoDays) convertTo: TimeUnits day) amount.
+	dayPositionInWeek := dayPositionInWeek \\ GregorianDay amountOfDaysPerWeek + 1.
+	
+	^GregorianDay dayPositionedInWeek: dayPositionInWeek! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+dayNumber
+	
+	^dayNumber! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+dayOfMonth
+	
+	^GregorianDayOfMonth month: self month dayNumber: dayNumber! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+hash
+
+	^monthOfYear hash bitXor: dayNumber hash! !
+
+!FixedGregorianDate methodsFor: 'initialization'!
+initializeMonthOfYear: aGregorianMonth dayNumber: aDayNumber
+
+	monthOfYear := aGregorianMonth.
+	dayNumber := aDayNumber! !
+
+!FixedGregorianDate methodsFor: 'testing'!
+isFirstDayOfMonth
+	
+	^dayNumber = 1! !
+
+!FixedGregorianDate methodsFor: 'testing'!
+isFirstDayOfYear
+	
+	^self isFirstDayOfMonth and: [ self month = GregorianMonth january ]! !
+
+!FixedGregorianDate methodsFor: 'testing'!
+isLastDayOfMonth
+	
+	^monthOfYear lastDayNumber = dayNumber! !
+
+!FixedGregorianDate methodsFor: 'testing'!
+isLastDayOfYear
+	
+	^self year lastDate = self! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+month
+	
+	^monthOfYear month! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+monthOfYear
+	
+	^monthOfYear! !
+
+!FixedGregorianDate methodsFor: 'enumerating'!
+next: aMeasure 
+	
+	^(TimeUnits day sameDomainAs: aMeasure unit)
+		ifTrue: [ self class newWithDaysFromBaseDate: (self numberOfDaysFromBaseDate + aMeasure) ]
+		ifFalse: [ self nextMonth: aMeasure ]
+! !
+
+!FixedGregorianDate methodsFor: 'enumerating'!
+nextMonth: aMeasure 
+	
+	^(monthOfYear next: aMeasure) onOrLast: dayNumber! !
+
+!FixedGregorianDate methodsFor: 'accessing - days'!
+numberOfDaysFromBaseDate
+	
+	^monthOfYear numberOfDaysFromBaseDate + self numberOfDaysFromBeginningOfMonth! !
+
+!FixedGregorianDate methodsFor: 'accessing - days' stamp: 'HAW 3/25/2017 19:10:35'!
+numberOfDaysFromBeginningOfMonth
+	
+	^SimpleMeasure amount: (dayNumber - 1) unit: TimeUnits day! !
+
+!FixedGregorianDate methodsFor: 'accessing - days'!
+numberOfDaysFromJanuaryFirst
+
+	^monthOfYear numberOfDaysFromJanuaryFirst + self numberOfDaysFromBeginningOfMonth! !
+
+!FixedGregorianDate methodsFor: 'accessing - days' stamp: 'HAW 3/25/2017 19:02:03'!
+numberOfDaysToEndOfMonth
+	
+	^monthOfYear numberOfDays - (SimpleMeasure amount: dayNumber unit: TimeUnits day)! !
+
+!FixedGregorianDate methodsFor: 'accessing - days'!
+numberOfDaysToEndOfYear
+
+	^self distanceTo: monthOfYear year lastDate! !
+
+!FixedGregorianDate methodsFor: 'printing'!
+printOn: aStream
+
+	self month printOn: aStream.
+	aStream space.
+	dayNumber printOn: aStream.
+	aStream nextPut: $,.
+	aStream space.
+	self year number printOn: aStream! !
+
+!FixedGregorianDate methodsFor: 'accessing'!
+year
+
+	^monthOfYear year! !
+
+!FixedGregorianDate class methodsFor: 'instance creation' stamp: 'HAW 3/25/2017 18:13:23'!
+fromDate: aDate
+
+	^self yearNumber: aDate yearNumber monthNumber: aDate monthIndex dayNumber: aDate dayOfMonth! !
+
+!FixedGregorianDate class methodsFor: 'initialization'!
+initializeTheBeginningAndTheEndOfTime
+
+	self initializeTheEndOfTime.
+	self initializeTheBeginningOfTime.! !
+
+!FixedGregorianDate class methodsFor: 'initialization'!
+initializeTheBeginningOfTime
+
+	theBeginningOfTime := self yearNumber: SmallInteger minVal monthNumber: 1 dayNumber: 1! !
+
+!FixedGregorianDate class methodsFor: 'initialization'!
+initializeTheEndOfTime
+
+	theEndOfTime := self yearNumber: SmallInteger maxVal monthNumber: 12 dayNumber: 31! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+monthOfYear: aGregorianMonthOfYear dayNumber: dayNumber
+
+	(aGregorianMonthOfYear isValidDayNumber: dayNumber)
+		ifFalse: [ InvalidGregorianDateException signalMonth: aGregorianMonthOfYear dayNumber: dayNumber ].
+		
+	^self new initializeMonthOfYear: aGregorianMonthOfYear dayNumber: dayNumber! !
+
+!FixedGregorianDate class methodsFor: 'instance creation' stamp: 'HAW 3/25/2017 19:11:35'!
+newWithDaysFromBaseDate: aNumberOfDays
+
+	| days yearNumber approxYears dayCount year |
+	
+	dayCount := (aNumberOfDays convertTo: TimeUnits day) amount.
+	days := dayCount.
+	yearNumber := 1901.
+	
+	[approxYears := days quo: 365.
+	approxYears = 0] whileFalse: [ | daysToSubtract |
+		yearNumber := yearNumber + approxYears.
+		daysToSubtract := yearNumber > 1900 
+			ifTrue: [ (yearNumber - 1901) * 365 + ((yearNumber - 1901) quo: 4) - ((yearNumber - 1901) quo: 100) + ((yearNumber - 1601) quo: 400)]
+			ifFalse: [(yearNumber - 1901) * 365 + ((yearNumber - 1900) quo: 4) - ((yearNumber - 1900) quo: 100) + ((yearNumber - 2000) quo: 400)].
+		days := dayCount - daysToSubtract ].
+	
+	days < 0 
+		ifTrue: [
+			year := GregorianYear number: (yearNumber - 1).
+			days := days + 365 + (year isLeap ifTrue: [ 1 ] ifFalse: [ 0 ]) ]
+		ifFalse: [ 
+			year := GregorianYear number: yearNumber ].
+	
+	^self year: year numberOfDaysFromJanuaryFirst: (SimpleMeasure amount: days unit: TimeUnits day)! !
+
+!FixedGregorianDate class methodsFor: 'accessing - special dates'!
+theBeginningOfTime
+
+	^theBeginningOfTime! !
+
+!FixedGregorianDate class methodsFor: 'accessing - special dates'!
+theEndOfTime
+
+	^theEndOfTime! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+today
+	
+	^self fromDate: Date today.
+	
+! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+tomorrow
+	
+	^self today next
+! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+year: aGregorianYear month: aGregorianMonth dayNumber: aNumber
+
+	^self monthOfYear: (GregorianMonthOfYear year: aGregorianYear month: aGregorianMonth) dayNumber: aNumber! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+year: aGregorianYear numberOfDaysFromJanuaryFirst: aNumberOfDays 
+
+	| month remaindingDays |
+	
+	month := aGregorianYear firstMonth.
+	remaindingDays := aNumberOfDays.
+	
+	[month numberOfDays <= remaindingDays] whileTrue: 
+			[remaindingDays := remaindingDays - month numberOfDays.
+			month := month next].
+	
+	^self monthOfYear: month dayNumber: (remaindingDays amount + 1)! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+yearNumber: aYearNumber month: aGregorianMonth dayNumber: aDayNumber
+
+	^self monthOfYear: (GregorianMonthOfYear yearNumber: aYearNumber month: aGregorianMonth) dayNumber: aDayNumber! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+yearNumber: yearNumber monthNumber: monthNumber dayNumber: dayNumber
+
+	^self monthOfYear: (GregorianMonthOfYear yearNumber: yearNumber monthNumber: monthNumber) dayNumber: dayNumber! !
+
+!FixedGregorianDate class methodsFor: 'instance creation'!
+yesterday
+	
+	^self today previous
+	
+! !
+
 !FilteredGregorianDate methodsFor: 'magnitude protocol'!
 < aDate
 
@@ -1446,260 +1700,6 @@ year
 timespan: aTimespan using: aTimeLineFilter
 	
 	^self new initializeTimespan: aTimespan using: aTimeLineFilter! !
-
-!FixedGregorianDate methodsFor: 'magnitude protocol'!
-< aGregorianDate
-
-	^monthOfYear < aGregorianDate monthOfYear 
-		or: [ monthOfYear = aGregorianDate monthOfYear  and: [ dayNumber < aGregorianDate dayNumber ] ]! !
-
-!FixedGregorianDate methodsFor: 'comparing'!
-= anObject
-
-	| valuedObject |
-
-	self == anObject ifTrue: [^true].
-	anObject isGregorianDate ifFalse: [^false].
-	valuedObject := anObject value.
-
-	^dayNumber = valuedObject dayNumber and: [ monthOfYear = valuedObject monthOfYear ]! !
-
-!FixedGregorianDate methodsFor: 'visitor accepting'!
-accept: aVisitor 
-
-	^aVisitor visitGregorianDate: self! !
-
-!FixedGregorianDate methodsFor: 'accessing - days'!
-day
-	"I obtain the days from first of January of 1900.
-	Two days are added because first of January of 1900 it was Monday and as first day of the week is Sunday
-	and because later I must verify if it is necessary to complete one week.
-	I obtain the module respect to the amount of days per week and I add one to him so that the interval is from 1 to 7."
-	
-	| dayPositionInWeek |
-	
-	dayPositionInWeek := ((self numberOfDaysFromBaseDate + GregorianDay twoDays) convertTo: TimeUnits day) amount.
-	dayPositionInWeek := dayPositionInWeek \\ GregorianDay amountOfDaysPerWeek + 1.
-	
-	^GregorianDay dayPositionedInWeek: dayPositionInWeek! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-dayNumber
-	
-	^dayNumber! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-dayOfMonth
-	
-	^GregorianDayOfMonth month: self month dayNumber: dayNumber! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-hash
-
-	^monthOfYear hash bitXor: dayNumber hash! !
-
-!FixedGregorianDate methodsFor: 'initialization'!
-initializeMonthOfYear: aGregorianMonth dayNumber: aDayNumber
-
-	monthOfYear := aGregorianMonth.
-	dayNumber := aDayNumber! !
-
-!FixedGregorianDate methodsFor: 'testing'!
-isFirstDayOfMonth
-	
-	^dayNumber = 1! !
-
-!FixedGregorianDate methodsFor: 'testing'!
-isFirstDayOfYear
-	
-	^self isFirstDayOfMonth and: [ self month = GregorianMonth january ]! !
-
-!FixedGregorianDate methodsFor: 'testing'!
-isLastDayOfMonth
-	
-	^monthOfYear lastDayNumber = dayNumber! !
-
-!FixedGregorianDate methodsFor: 'testing'!
-isLastDayOfYear
-	
-	^self year lastDate = self! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-month
-	
-	^monthOfYear month! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-monthOfYear
-	
-	^monthOfYear! !
-
-!FixedGregorianDate methodsFor: 'enumerating'!
-next: aMeasure 
-	
-	^(TimeUnits day sameDomainAs: aMeasure unit)
-		ifTrue: [ self class newWithDaysFromBaseDate: (self numberOfDaysFromBaseDate + aMeasure) ]
-		ifFalse: [ self nextMonth: aMeasure ]
-! !
-
-!FixedGregorianDate methodsFor: 'enumerating'!
-nextMonth: aMeasure 
-	
-	^(monthOfYear next: aMeasure) onOrLast: dayNumber! !
-
-!FixedGregorianDate methodsFor: 'accessing - days'!
-numberOfDaysFromBaseDate
-	
-	^monthOfYear numberOfDaysFromBaseDate + self numberOfDaysFromBeginningOfMonth! !
-
-!FixedGregorianDate methodsFor: 'accessing - days' stamp: 'HAW 3/25/2017 19:10:35'!
-numberOfDaysFromBeginningOfMonth
-	
-	^SimpleMeasure amount: (dayNumber - 1) unit: TimeUnits day! !
-
-!FixedGregorianDate methodsFor: 'accessing - days'!
-numberOfDaysFromJanuaryFirst
-
-	^monthOfYear numberOfDaysFromJanuaryFirst + self numberOfDaysFromBeginningOfMonth! !
-
-!FixedGregorianDate methodsFor: 'accessing - days' stamp: 'HAW 3/25/2017 19:02:03'!
-numberOfDaysToEndOfMonth
-	
-	^monthOfYear numberOfDays - (SimpleMeasure amount: dayNumber unit: TimeUnits day)! !
-
-!FixedGregorianDate methodsFor: 'accessing - days'!
-numberOfDaysToEndOfYear
-
-	^self distanceTo: monthOfYear year lastDate! !
-
-!FixedGregorianDate methodsFor: 'printing'!
-printOn: aStream
-
-	self month printOn: aStream.
-	aStream space.
-	dayNumber printOn: aStream.
-	aStream nextPut: $,.
-	aStream space.
-	self year number printOn: aStream! !
-
-!FixedGregorianDate methodsFor: 'accessing'!
-year
-
-	^monthOfYear year! !
-
-!FixedGregorianDate class methodsFor: 'instance creation' stamp: 'HAW 3/25/2017 18:13:23'!
-fromDate: aDate
-
-	^self yearNumber: aDate yearNumber monthNumber: aDate monthIndex dayNumber: aDate dayOfMonth! !
-
-!FixedGregorianDate class methodsFor: 'initialization'!
-initializeTheBeginningAndTheEndOfTime
-
-	self initializeTheEndOfTime.
-	self initializeTheBeginningOfTime.! !
-
-!FixedGregorianDate class methodsFor: 'initialization'!
-initializeTheBeginningOfTime
-
-	theBeginningOfTime := self yearNumber: SmallInteger minVal monthNumber: 1 dayNumber: 1! !
-
-!FixedGregorianDate class methodsFor: 'initialization'!
-initializeTheEndOfTime
-
-	theEndOfTime := self yearNumber: SmallInteger maxVal monthNumber: 12 dayNumber: 31! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-monthOfYear: aGregorianMonthOfYear dayNumber: dayNumber
-
-	(aGregorianMonthOfYear isValidDayNumber: dayNumber)
-		ifFalse: [ InvalidGregorianDateException signalMonth: aGregorianMonthOfYear dayNumber: dayNumber ].
-		
-	^self new initializeMonthOfYear: aGregorianMonthOfYear dayNumber: dayNumber! !
-
-!FixedGregorianDate class methodsFor: 'instance creation' stamp: 'HAW 3/25/2017 19:11:35'!
-newWithDaysFromBaseDate: aNumberOfDays
-
-	| days yearNumber approxYears dayCount year |
-	
-	dayCount := (aNumberOfDays convertTo: TimeUnits day) amount.
-	days := dayCount.
-	yearNumber := 1901.
-	
-	[approxYears := days quo: 365.
-	approxYears = 0] whileFalse: [ | daysToSubtract |
-		yearNumber := yearNumber + approxYears.
-		daysToSubtract := yearNumber > 1900 
-			ifTrue: [ (yearNumber - 1901) * 365 + ((yearNumber - 1901) quo: 4) - ((yearNumber - 1901) quo: 100) + ((yearNumber - 1601) quo: 400)]
-			ifFalse: [(yearNumber - 1901) * 365 + ((yearNumber - 1900) quo: 4) - ((yearNumber - 1900) quo: 100) + ((yearNumber - 2000) quo: 400)].
-		days := dayCount - daysToSubtract ].
-	
-	days < 0 
-		ifTrue: [
-			year := GregorianYear number: (yearNumber - 1).
-			days := days + 365 + (year isLeap ifTrue: [ 1 ] ifFalse: [ 0 ]) ]
-		ifFalse: [ 
-			year := GregorianYear number: yearNumber ].
-	
-	^self year: year numberOfDaysFromJanuaryFirst: (SimpleMeasure amount: days unit: TimeUnits day)! !
-
-!FixedGregorianDate class methodsFor: 'accessing - special dates'!
-theBeginningOfTime
-
-	^theBeginningOfTime! !
-
-!FixedGregorianDate class methodsFor: 'accessing - special dates'!
-theEndOfTime
-
-	^theEndOfTime! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-today
-	
-	^self fromDate: Date today.
-	
-! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-tomorrow
-	
-	^self today next
-! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-year: aGregorianYear month: aGregorianMonth dayNumber: aNumber
-
-	^self monthOfYear: (GregorianMonthOfYear year: aGregorianYear month: aGregorianMonth) dayNumber: aNumber! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-year: aGregorianYear numberOfDaysFromJanuaryFirst: aNumberOfDays 
-
-	| month remaindingDays |
-	
-	month := aGregorianYear firstMonth.
-	remaindingDays := aNumberOfDays.
-	
-	[month numberOfDays <= remaindingDays] whileTrue: 
-			[remaindingDays := remaindingDays - month numberOfDays.
-			month := month next].
-	
-	^self monthOfYear: month dayNumber: (remaindingDays amount + 1)! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-yearNumber: aYearNumber month: aGregorianMonth dayNumber: aDayNumber
-
-	^self monthOfYear: (GregorianMonthOfYear yearNumber: aYearNumber month: aGregorianMonth) dayNumber: aDayNumber! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-yearNumber: yearNumber monthNumber: monthNumber dayNumber: dayNumber
-
-	^self monthOfYear: (GregorianMonthOfYear yearNumber: yearNumber monthNumber: monthNumber) dayNumber: dayNumber! !
-
-!FixedGregorianDate class methodsFor: 'instance creation'!
-yesterday
-	
-	^self today previous
-	
-! !
 
 !GregorianDateTime methodsFor: 'magnitude protocol'!
 < aGregorianDayTime
@@ -4603,59 +4603,6 @@ new
 
 	^self basicNew! !
 
-!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing'!
-date
-
-	^date! !
-
-!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing' stamp: 'HAW 3/25/2017 18:33:59'!
-description
-
-	^'{1} is not included in the {2} time line filter' format: { date .timeLineFilter }! !
-
-!DateNotIncludedInTimeLineFilterException methodsFor: 'initialization'!
-initializeDate: aDate timeLineFilter: aTimeLineFilter 
-	date := aDate.
-	timeLineFilter := aTimeLineFilter! !
-
-!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing'!
-timeLineFilter
-
-	^timeLineFilter! !
-
-!DateNotIncludedInTimeLineFilterException class methodsFor: 'instance creation'!
-date: aDate timeLineFilter: aTimeLineFilter 
-	^self new initializeDate: aDate timeLineFilter: aTimeLineFilter! !
-
-!DateNotIncludedInTimeLineFilterException class methodsFor: 'signaling'!
-signalDate: aDate timeLineFilter: aTimeLineFilter 
-	(self date: aDate timeLineFilter: aTimeLineFilter) signal! !
-
-!NotIterateUniverseException methodsFor: 'accessing' stamp: 'HAW 3/25/2017 18:33:05'!
-description
-
-	^'The universe {1} can''t be iterated' format: { universe }! !
-
-!NotIterateUniverseException methodsFor: 'initialization'!
-initializeUniverse: anUniverse
-
-	universe := anUniverse.! !
-
-!NotIterateUniverseException methodsFor: 'accessing'!
-universe
-
-	^universe! !
-
-!NotIterateUniverseException class methodsFor: 'signaling'!
-signalUniverse: anUniverse
-
-	(self universe: anUniverse) signal! !
-
-!NotIterateUniverseException class methodsFor: 'instance creation'!
-universe: anUniverse
-
-	^self new initializeUniverse: anUniverse! !
-
 !InvalidDayOfMonthException methodsFor: 'accessing'!
 dayNumber
 
@@ -4865,6 +4812,59 @@ signalTime: aTime
 time: aTime
 
 	^self new initializeTime: aTime! !
+
+!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing'!
+date
+
+	^date! !
+
+!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing' stamp: 'HAW 3/25/2017 18:33:59'!
+description
+
+	^'{1} is not included in the {2} time line filter' format: { date .timeLineFilter }! !
+
+!DateNotIncludedInTimeLineFilterException methodsFor: 'initialization'!
+initializeDate: aDate timeLineFilter: aTimeLineFilter 
+	date := aDate.
+	timeLineFilter := aTimeLineFilter! !
+
+!DateNotIncludedInTimeLineFilterException methodsFor: 'accessing'!
+timeLineFilter
+
+	^timeLineFilter! !
+
+!DateNotIncludedInTimeLineFilterException class methodsFor: 'instance creation'!
+date: aDate timeLineFilter: aTimeLineFilter 
+	^self new initializeDate: aDate timeLineFilter: aTimeLineFilter! !
+
+!DateNotIncludedInTimeLineFilterException class methodsFor: 'signaling'!
+signalDate: aDate timeLineFilter: aTimeLineFilter 
+	(self date: aDate timeLineFilter: aTimeLineFilter) signal! !
+
+!NotIterateUniverseException methodsFor: 'accessing' stamp: 'HAW 3/25/2017 18:33:05'!
+description
+
+	^'The universe {1} can''t be iterated' format: { universe }! !
+
+!NotIterateUniverseException methodsFor: 'initialization'!
+initializeUniverse: anUniverse
+
+	universe := anUniverse.! !
+
+!NotIterateUniverseException methodsFor: 'accessing'!
+universe
+
+	^universe! !
+
+!NotIterateUniverseException class methodsFor: 'signaling'!
+signalUniverse: anUniverse
+
+	(self universe: anUniverse) signal! !
+
+!NotIterateUniverseException class methodsFor: 'instance creation'!
+universe: anUniverse
+
+	^self new initializeUniverse: anUniverse! !
 
 !AllDatesUniverseTest methodsFor: 'test' stamp: 'HAW 3/25/2017 18:34:42'!
 testDo
@@ -11011,6 +11011,223 @@ new
 
 	^uniqueInstance! !
 
+!GregorianTimespan methodsFor: 'comparing'!
+= anObject
+
+	^self class = anObject class
+		and: [ from = anObject from 
+		and: [ duration = anObject duration ]]! !
+
+!GregorianTimespan methodsFor: 'converting' stamp: 'HAW 3/25/2017 20:46:07'!
+asInterval
+
+	^ArithmeticObjectInterval
+		from: from
+		to: self to
+		by: (duration unit with: 1)
+		intervalStrategy: DefaultPointInTimeIntervalStrategy new.! !
+
+!GregorianTimespan methodsFor: 'accessing'!
+duration
+
+	^duration! !
+
+!GregorianTimespan methodsFor: 'accessing'!
+from
+
+	^from! !
+
+!GregorianTimespan methodsFor: 'accessing'!
+hash
+
+	^from hash bitXor: duration hash! !
+
+!GregorianTimespan methodsFor: 'initialization'!
+initializeFrom: aGregorianDate duration: aTimeMeasure
+
+	from := aGregorianDate.
+	duration := aTimeMeasure! !
+
+!GregorianTimespan methodsFor: 'printing'!
+printOn: aStream
+
+	duration printOn: aStream.
+	aStream nextPutAll: ' from '.
+	from printOn: aStream! !
+
+!GregorianTimespan methodsFor: 'accessing'!
+to
+	
+	^from next: duration! !
+
+!GregorianTimespan methodsFor: 'evaluating'!
+value
+
+	^self class from: from value duration: duration! !
+
+!GregorianTimespan class methodsFor: 'instance creation'!
+from: aGregorianDate duration: aTimeMeasure
+
+	^self new initializeFrom: aGregorianDate duration: aTimeMeasure
+
+! !
+
+!GregorianTimespan class methodsFor: 'instance creation'!
+fromInterval: anInterval
+
+	^self from: anInterval from duration: (anInterval from distanceTo: anInterval to)! !
+
+!TimeModelInitialization class methodsFor: 'initialization' stamp: 'HAW 3/25/2017 20:36:23'!
+initialize
+
+	"Everything is initialized here because there are dependencies of how the objects are initialized.
+	For that reason the #initialize method of each class cannot be used."
+
+	TimeUnits initializeTimeUnits.
+	FebruaryGregorianMonth initializeUniqueInstance.
+	JanuaryGregorianMonth initializeUniqueInstance.
+	GregorianDay initializeCommonObjects.
+	GregorianMonth initializeCommonObjects.
+	GregorianYear initializeCommonObjects.
+	FixedGregorianDate initializeTheBeginningAndTheEndOfTime.
+	TimeOfDay initializeCommonObjects.
+	GregorianDateTime initializeTheBeginningAndTheEndOfTime! !
+
+!TimeModelInitialization class methodsFor: 'initialization'!
+initializeAfterLoad
+
+	self initialize! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+allUnits
+	
+	^OrderedCollection new
+		add: day;
+		add: hour;
+		add: minute;
+		add: second;
+		add: millisecond;
+		add: week;
+		add: month;
+		add: year;
+		yourself.! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+day
+	
+	^day! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+hour
+	
+	^hour! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeDay
+
+	day := BaseUnit named: 'day'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeHour
+
+	hour := ProportionalDerivedUnit 
+		baseUnit: day 
+		conversionFactor: 1/24
+		named: 'hour'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeMillisecond
+
+	millisecond := ProportionalDerivedUnit 
+		baseUnit: day 
+		conversionFactor: 1/(1000*60*60*24)
+		named: 'millisecond'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeMinute
+
+	minute := ProportionalDerivedUnit 
+		baseUnit: day 
+		conversionFactor: 1/(24*60)
+		named: 'minute'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeMonth
+
+	month := BaseUnit nameForOne: 'month' nameForMany: 'months'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeSecond
+
+	second := ProportionalDerivedUnit 
+		baseUnit: day 
+		conversionFactor: 1/(24*60*60)
+		named: 'second'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeTimeUnits
+
+	self initializeDay.
+	self initializeMillisecond.
+	self initializeSecond.
+	self initializeMinute.
+	self initializeHour.
+	self initializeWeek.
+	self initializeMonth.
+	self initializeYear
+! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeWeek
+
+	week := ProportionalDerivedUnit 
+		baseUnit: day 
+		conversionFactor: GregorianDay amountOfDaysPerWeek
+		named: 'week'! !
+
+!TimeUnits class methodsFor: 'initialization'!
+initializeYear
+
+	year := ProportionalDerivedUnit 
+		baseUnit: month 
+		conversionFactor:  GregorianMonth amountOfMonthsPerYear
+		named: 'year'! !
+
+!TimeUnits class methodsFor: 'initialization' stamp: 'HAW 8/22/2017 11:59:11'!
+installUnitsAsGlobals
+
+	self allUnits do: [ :aUnit | Smalltalk at: aUnit name asSymbol put: aUnit ]	! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+millisecond
+	
+	^millisecond! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+minute
+
+	^minute! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+month
+	
+	^month! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+second
+
+	^second! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+week
+
+	^week! !
+
+!TimeUnits class methodsFor: 'accessing - units'!
+year
+	
+	^year! !
+
 !InclusionRule methodsFor: 'querying'!
 includes: anObject
 
@@ -11740,222 +11957,10 @@ initializeUniqueInstance
 new
 
 	^uniqueInstance! !
-
-!GregorianTimespan methodsFor: 'comparing'!
-= anObject
-
-	^self class = anObject class
-		and: [ from = anObject from 
-		and: [ duration = anObject duration ]]! !
-
-!GregorianTimespan methodsFor: 'converting' stamp: 'HAW 3/25/2017 20:46:07'!
-asInterval
-
-	^ArithmeticObjectInterval
-		from: from
-		to: self to
-		by: (duration unit with: 1)
-		intervalStrategy: DefaultPointInTimeIntervalStrategy new.! !
-
-!GregorianTimespan methodsFor: 'accessing'!
-duration
-
-	^duration! !
-
-!GregorianTimespan methodsFor: 'accessing'!
-from
-
-	^from! !
-
-!GregorianTimespan methodsFor: 'accessing'!
-hash
-
-	^from hash bitXor: duration hash! !
-
-!GregorianTimespan methodsFor: 'initialization'!
-initializeFrom: aGregorianDate duration: aTimeMeasure
-
-	from := aGregorianDate.
-	duration := aTimeMeasure! !
-
-!GregorianTimespan methodsFor: 'printing'!
-printOn: aStream
-
-	duration printOn: aStream.
-	aStream nextPutAll: ' from '.
-	from printOn: aStream! !
-
-!GregorianTimespan methodsFor: 'accessing'!
-to
-	
-	^from next: duration! !
-
-!GregorianTimespan methodsFor: 'evaluating'!
-value
-
-	^self class from: from value duration: duration! !
-
-!GregorianTimespan class methodsFor: 'instance creation'!
-from: aGregorianDate duration: aTimeMeasure
-
-	^self new initializeFrom: aGregorianDate duration: aTimeMeasure
-
-! !
-
-!GregorianTimespan class methodsFor: 'instance creation'!
-fromInterval: anInterval
-
-	^self from: anInterval from duration: (anInterval from distanceTo: anInterval to)! !
-
-!TimeModelInitialization class methodsFor: 'initialization' stamp: 'HAW 3/25/2017 20:36:23'!
-initialize
-
-	"Everything is initialized here because there are dependencies of how the objects are initialized.
-	For that reason the #initialize method of each class cannot be used."
-
-	TimeUnits initializeTimeUnits.
-	FebruaryGregorianMonth initializeUniqueInstance.
-	JanuaryGregorianMonth initializeUniqueInstance.
-	GregorianDay initializeCommonObjects.
-	GregorianMonth initializeCommonObjects.
-	GregorianYear initializeCommonObjects.
-	FixedGregorianDate initializeTheBeginningAndTheEndOfTime.
-	TimeOfDay initializeCommonObjects.
-	GregorianDateTime initializeTheBeginningAndTheEndOfTime! !
-
-!TimeModelInitialization class methodsFor: 'initialization'!
-initializeAfterLoad
-
-	self initialize! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-allUnits
-	
-	^OrderedCollection new
-		add: day;
-		add: hour;
-		add: minute;
-		add: second;
-		add: millisecond;
-		add: week;
-		add: month;
-		add: year;
-		yourself.! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-day
-	
-	^day! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-hour
-	
-	^hour! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeDay
-
-	day := BaseUnit named: 'day'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeHour
-
-	hour := ProportionalDerivedUnit 
-		baseUnit: day 
-		conversionFactor: 1/24
-		named: 'hour'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeMillisecond
-
-	millisecond := ProportionalDerivedUnit 
-		baseUnit: day 
-		conversionFactor: 1/(1000*60*60*24)
-		named: 'millisecond'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeMinute
-
-	minute := ProportionalDerivedUnit 
-		baseUnit: day 
-		conversionFactor: 1/(24*60)
-		named: 'minute'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeMonth
-
-	month := BaseUnit nameForOne: 'month' nameForMany: 'months'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeSecond
-
-	second := ProportionalDerivedUnit 
-		baseUnit: day 
-		conversionFactor: 1/(24*60*60)
-		named: 'second'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeTimeUnits
-
-	self initializeDay.
-	self initializeMillisecond.
-	self initializeSecond.
-	self initializeMinute.
-	self initializeHour.
-	self initializeWeek.
-	self initializeMonth.
-	self initializeYear
-! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeWeek
-
-	week := ProportionalDerivedUnit 
-		baseUnit: day 
-		conversionFactor: GregorianDay amountOfDaysPerWeek
-		named: 'week'! !
-
-!TimeUnits class methodsFor: 'initialization'!
-initializeYear
-
-	year := ProportionalDerivedUnit 
-		baseUnit: month 
-		conversionFactor:  GregorianMonth amountOfMonthsPerYear
-		named: 'year'! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-millisecond
-	
-	^millisecond! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-minute
-
-	^minute! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-month
-	
-	^month! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-second
-
-	^second! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-week
-
-	^week! !
-
-!TimeUnits class methodsFor: 'accessing - units'!
-year
-	
-	^year! !
 DefaultPointInTimeIntervalStrategy initialize!
 MoreThanOnePointInTimeIntervalStrategy initialize!
 RoundedTimelineIntervalStrategy initialize!
+TimeModelInitialization initialize!
 AllDatesUniverse initialize!
 AllUniverse initialize!
 NaturalNumbersTestUniverse initialize!
-TimeModelInitialization initialize!
