@@ -1,11 +1,11 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3147] on 22 August 2017 at 4:41:30 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 23 August 2017 at 7:44:01 am'!
 'Description Implementatio of a rich Gregorian calendar model. Depends on Aconcagua.
 
 Presented at ESUG 2005: https://www.dropbox.com/s/kjczqs05jk9olk7/article.pdf?dl=0
 Here is a FAQ on how to use it: https://www.dropbox.com/s/6y3uipc6r3x80or/Chalten%20FAQ.doc?dl=0
 
 It has some changes to the paper but there are some more I''d like to do like less exceptions and better tests'!
-!provides: 'Chalten' 1 5!
+!provides: 'Chalten' 1 6!
 !requires: 'Aconcagua' 1 1 nil!
 !classDefinition: #PointInTime category: #'Chalten-TimeModel'!
 IntervalAwareMagnitude subclass: #PointInTime
@@ -849,6 +849,11 @@ asMilliseconds
 
 	^ self asDurationSinceMidnight totalMilliseconds
 ! !
+
+!Delay class methodsFor: '*Chalten-TimeModel' stamp: 'HAW 8/22/2017 17:45:30'!
+for: anAmountOfTime
+
+	^self forSeconds: (anAmountOfTime convertTo: TimeUnits second) amount! !
 
 !PointInTime methodsFor: 'querying'!
 absoluteDistanceTo: aTimelinePoint
