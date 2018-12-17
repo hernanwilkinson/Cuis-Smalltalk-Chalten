@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3292] on 17 April 2018 at 6:46:04 pm'!
-'Description Message #/ can be use to create a day of month and a date. For example: January/1 or January/1/2018'!
-!provides: 'Chalten' 1 7!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3526] on 17 December 2018 at 6:38:33 pm'!
+'Description Message #: can be use to create times as 10:20 or 10:20:30'!
+!provides: 'Chalten' 1 8!
 !requires: 'Aconcagua' 1 1 nil!
 SystemOrganization addCategory: #'Chalten-TimeModel'!
 SystemOrganization addCategory: #'Chalten-TimeLineFilterModel'!
@@ -4240,6 +4240,24 @@ printOn: aStream
 	aStream nextPut: $:.
 	self seconds amount printOn: aStream! !
 
+!TimeOfDay methodsFor: 'instance creation' stamp: 'HAW 12/17/2018 17:21:12'!
+: anAmountOfSeconds
+
+	self assertSecondsAreZero.
+	
+	^self class timeFromMidnight: timeFromMidnight + (anAmountOfSeconds * TimeUnits second)! !
+
+!TimeOfDay methodsFor: 'assertions' stamp: 'HAW 12/17/2018 17:22:24'!
+assertSecondsAreZero
+
+	self seconds isZero ifFalse: [ self signalCanNotCreateTimeOfDayUsingSemiColon ].
+	! !
+
+!TimeOfDay methodsFor: 'exceptions' stamp: 'HAW 12/17/2018 17:22:48'!
+signalCanNotCreateTimeOfDayUsingSemiColon
+	
+	self error: self class canNotCreateTimeOfDayUsingSemiColonErrorDescription! !
+
 !TimeOfDay class methodsFor: 'accessing'!
 firstTimeOfDay
 
@@ -4387,6 +4405,11 @@ initializeTwentyFourHours
 initializeZeroHours
 
 	zeroHours := TimeUnits hour with: 0! !
+
+!TimeOfDay class methodsFor: 'exceptions' stamp: 'HAW 12/17/2018 17:23:38'!
+canNotCreateTimeOfDayUsingSemiColonErrorDescription
+	
+	^'Can not create a time of day using #: when seconds are not zero'! !
 
 !DefinedByRules methodsFor: 'adding/removing'!
 add: newObject
@@ -4787,10 +4810,16 @@ signalNumber: aNumber
 
 	(self number: aNumber) signal! !
 
-!InvalidTimeOfDayException methodsFor: 'accessing' stamp: 'HAW 3/25/2017 18:23:34'!
+!InvalidTimeOfDayException methodsFor: 'accessing' stamp: 'HAW 12/17/2018 18:27:06'!
 description
 
-	^'The time {1} is invalid for one day' format: { time }! !
+	| timeToShow |
+	
+	timeToShow := time unit = TimeUnits day 
+		ifTrue: [ (time convertTo: TimeUnits hour) asFloatAmount ]
+		ifFalse: [ time ].
+		
+	^'The time {1} is invalid for one day' format: { timeToShow }! !
 
 !InvalidTimeOfDayException methodsFor: 'accessing'!
 time
@@ -10644,6 +10673,27 @@ testLessThan
 	self assert: (TimeOfDay hours: 0) < (TimeOfDay timeFromMidnight: (TimeUnits millisecond with: 1)).
 	self deny: (TimeOfDay timeFromMidnight: (TimeUnits millisecond with: 1)) < (TimeOfDay hours: 0)! !
 
+!TimeOfDayTest methodsFor: 'test instance creation' stamp: 'HAW 12/17/2018 17:14:55'!
+testCanCreateAsWrittenInEnglish
+
+	| timeOfDay |
+	
+	timeOfDay := 10:20:30.
+	
+	self assert: timeOfDay hours equals: 10*TimeUnits hour.
+	self assert: timeOfDay minutes equals: 20*TimeUnits minute.
+	self assert: timeOfDay seconds equals: 30*TimeUnits second.
+	! !
+
+!TimeOfDayTest methodsFor: 'test instance creation' stamp: 'HAW 12/17/2018 17:21:33'!
+testCanNotCreateTimeOfDayWithSemiColonWhenReceiverHasSeconds
+
+	self 
+		should: [  (10:20:30) : 20 ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: TimeOfDay canNotCreateTimeOfDayUsingSemiColonErrorDescription]! !
+
 !TimeOfDayTest methodsFor: 'test instance creation'!
 testCreation
 
@@ -11971,6 +12021,11 @@ new
 isGregorianDate
 
 	^false! !
+
+!SmallInteger methodsFor: '*Chalten-Extensions' stamp: 'HAW 12/17/2018 18:10:57'!
+: anAmountOfMinutes
+
+	^TimeOfDay hours: self minutes: anAmountOfMinutes ! !
 
 !Time methodsFor: '*Chalten-Time Extensions' stamp: 'HAW 8/22/2017 16:40:45'!
 asMilliseconds
