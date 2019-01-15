@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3526] on 17 December 2018 at 6:38:33 pm'!
-'Description Message #: can be use to create times as 10:20 or 10:20:30'!
-!provides: 'Chalten' 1 8!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3562] on 15 January 2019 at 7:54:21 pm'!
+'Description Message #at: can be sent to GregorianDate to create a date time. For example: today at: 10:30:25 '!
+!provides: 'Chalten' 1 9!
 !requires: 'Aconcagua' 1 1 nil!
 SystemOrganization addCategory: #'Chalten-TimeModel'!
 SystemOrganization addCategory: #'Chalten-TimeLineFilterModel'!
@@ -883,22 +883,29 @@ asSmalltalkDate
 	
 ! !
 
-!GregorianDate methodsFor: 'accessing - datetime'!
+!GregorianDate methodsFor: 'datetime creation' stamp: 'HAW 1/15/2019 19:20:12'!
+at: aTimeOfDay
+
+	^GregorianDateTime 
+		date: self 
+		timeOfDay: aTimeOfDay ! !
+
+!GregorianDate methodsFor: 'datetime creation'!
 atLastTimeOfDay
 	
 	^self atTimeOfDay: TimeOfDay lastTimeOfDay! !
 
-!GregorianDate methodsFor: 'accessing - datetime'!
+!GregorianDate methodsFor: 'datetime creation'!
 atMidnight
 	
 	^self atTimeOfDay: TimeOfDay midnight! !
 
-!GregorianDate methodsFor: 'accessing - datetime'!
+!GregorianDate methodsFor: 'datetime creation'!
 atNoon
 	
 	^self atTimeOfDay: TimeOfDay noon! !
 
-!GregorianDate methodsFor: 'accessing - datetime'!
+!GregorianDate methodsFor: 'datetime creation'!
 atTimeOfDay: aTimeOfDay 
 
 	^GregorianDateTime date: self timeOfDay: aTimeOfDay! !
@@ -1807,12 +1814,14 @@ initializeDate: aGregorianDate timeOfDay: aTimeOfDay
 	date := aGregorianDate.
 	timeOfDay := aTimeOfDay! !
 
-!GregorianDateTime methodsFor: 'printing'!
+!GregorianDateTime methodsFor: 'printing' stamp: 'HAW 1/15/2019 19:22:59'!
 printOn: aStream
 
-	date printOn: aStream.
-	aStream space.
-	timeOfDay printOn: aStream! !
+	aStream 
+		print: date;
+		nextPutAll: ' at ';
+		print: timeOfDay.
+		! !
 
 !GregorianDateTime class methodsFor: 'instance creation'!
 date: aGregorianDate timeOfDay: aTimeOfDay 
@@ -5861,6 +5870,12 @@ testAsSmalltalkDate
 	self assert: relativeDate asSmalltalkDate = absoluteDate asSmalltalkDate
 	! !
 
+!RelativeGregorianDateTest methodsFor: 'test gregorian date protocol' stamp: 'HAW 1/15/2019 19:13:05'!
+testAt
+
+	self assert: (relativeDate at: 19:12:50)= (absoluteDate at: 19:12:50)
+	! !
+
 !RelativeGregorianDateTest methodsFor: 'test gregorian date protocol'!
 testAtMidnight
 
@@ -7072,7 +7087,18 @@ testAsSmalltalkDate
 	self assert: gregorianDate month number = date monthIndex.
 	self assert: gregorianDate dayNumber = date dayOfMonth.! !
 
-!FixedGregorianDateTest methodsFor: 'test accessing' stamp: 'HAW 3/25/2017 20:36:23'!
+!FixedGregorianDateTest methodsFor: 'test datetime creation' stamp: 'HAW 1/15/2019 19:10:51'!
+testAt
+
+	| january_15_2019_at_19_03_10 |
+	
+	"I do not use variables to extract date and time creation to show how nice it reads - Hernan"
+	january_15_2019_at_19_03_10 := January/15/2019 at: 19:03:10.
+	
+	self assert: january_15_2019_at_19_03_10 date equals: January/15/2019.
+	self assert: january_15_2019_at_19_03_10 timeOfDay equals: 19:03:10! !
+
+!FixedGregorianDateTest methodsFor: 'test datetime creation' stamp: 'HAW 3/25/2017 20:36:23'!
 testAtMidnight
 
 	self  assert: (FixedGregorianDate yearNumber: 2004 monthNumber: 10 dayNumber: 1) atMidnight =
@@ -7080,7 +7106,7 @@ testAtMidnight
 			date: (FixedGregorianDate yearNumber: 2004 monthNumber: 10 dayNumber: 1)
 			timeOfDay: (TimeOfDay  hours: 00))! !
 
-!FixedGregorianDateTest methodsFor: 'test accessing' stamp: 'HAW 3/25/2017 20:36:23'!
+!FixedGregorianDateTest methodsFor: 'test datetime creation' stamp: 'HAW 3/25/2017 20:36:23'!
 testAtNoon
 
 	self assert: (FixedGregorianDate yearNumber: 2004 monthNumber: 10 dayNumber: 1) atNoon =
@@ -7088,7 +7114,7 @@ testAtNoon
 			date: (FixedGregorianDate yearNumber: 2004 monthNumber: 10 dayNumber: 1)
 			timeOfDay: (TimeOfDay  hours: 12))! !
 
-!FixedGregorianDateTest methodsFor: 'test accessing' stamp: 'HAW 3/25/2017 20:36:23'!
+!FixedGregorianDateTest methodsFor: 'test datetime creation' stamp: 'HAW 3/25/2017 20:36:23'!
 testAtTimeOfDay
 
 	self assert: ((FixedGregorianDate yearNumber: 2004 monthNumber: 10 dayNumber: 1) atTimeOfDay: (TimeOfDay hours: 10)) =
@@ -7943,10 +7969,10 @@ testNow
 	self assert: now < nowInTwoSeconds.
 	self assert: ((now distanceTo: nowInTwoSeconds) - (TimeUnits second with: 1)) abs <= (TimeUnits millisecond with: 10)! !
 
-!GregorianDateTimeTest methodsFor: 'test printing'!
+!GregorianDateTimeTest methodsFor: 'test printing' stamp: 'HAW 1/15/2019 19:23:31'!
 testPrintString
 
-	self assert: januaryFirstOf2004On23Hours59Minutes59Seconds printString = 'January 1, 2004 23:59:59'! !
+	self assert: januaryFirstOf2004On23Hours59Minutes59Seconds printString = 'January 1, 2004 at 23:59:59'! !
 
 !GregorianDateTimeTest methodsFor: 'test interval protocol' stamp: 'HAW 3/25/2017 20:36:23'!
 testReverse
