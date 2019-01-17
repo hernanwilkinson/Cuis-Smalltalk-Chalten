@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3562] on 15 January 2019 at 7:54:21 pm'!
-'Description Message #at: can be sent to GregorianDate to create a date time. For example: today at: 10:30:25 '!
-!provides: 'Chalten' 1 9!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3562] on 17 January 2019 at 12:09:33 am'!
+'Description some parameter renames'!
+!provides: 'Chalten' 1 10!
 !requires: 'Aconcagua' 1 1 nil!
 SystemOrganization addCategory: #'Chalten-TimeModel'!
 SystemOrganization addCategory: #'Chalten-TimeLineFilterModel'!
@@ -839,20 +839,20 @@ NaturalNumbersTestUniverse class
 	instanceVariableNames: 'uniqueInstance'!
 
 
-!PointInTime methodsFor: 'querying'!
-absoluteDistanceTo: aTimelinePoint
+!PointInTime methodsFor: 'querying' stamp: 'HAW 1/16/2019 22:48:29'!
+absoluteDistanceTo: aPointInTime
 
-	^(self distanceTo: aTimelinePoint) abs
+	^(self distanceTo: aPointInTime) abs
 	
 ! !
 
-!PointInTime methodsFor: 'querying'!
-distanceFrom: aTimelinePoint
+!PointInTime methodsFor: 'querying' stamp: 'HAW 1/16/2019 22:48:22'!
+distanceFrom: aPointInTime
 
-	^aTimelinePoint distanceTo: self! !
+	^aPointInTime distanceTo: self! !
 
-!PointInTime methodsFor: 'querying'!
-distanceTo: aTimelinePoint
+!PointInTime methodsFor: 'querying' stamp: 'HAW 1/16/2019 22:48:12'!
+distanceTo: aPointInTime
 
 	self subclassResponsibility! !
 
@@ -861,8 +861,8 @@ next
 	
 	^self next: self defaultIntervalIncrement! !
 
-!PointInTime methodsFor: 'enumerating' stamp: 'HAW 3/25/2017 20:48:21'!
-next: aMeasure
+!PointInTime methodsFor: 'enumerating' stamp: 'HAW 1/16/2019 22:49:10'!
+next: aTimeMeasure
 
 	self subclassResponsibility! !
 
@@ -871,10 +871,10 @@ previous
 	
 	^self previous: self defaultIntervalIncrement! !
 
-!PointInTime methodsFor: 'enumerating'!
-previous: aMeasure 
+!PointInTime methodsFor: 'enumerating' stamp: 'HAW 1/16/2019 22:49:17'!
+previous: aTimeMeasure 
 	
-	^self next: aMeasure negated! !
+	^self next: aTimeMeasure negated! !
 
 !GregorianDate methodsFor: 'converting' stamp: 'mx 4/2/2006 19:12'!
 asSmalltalkDate
@@ -883,12 +883,10 @@ asSmalltalkDate
 	
 ! !
 
-!GregorianDate methodsFor: 'datetime creation' stamp: 'HAW 1/15/2019 19:20:12'!
+!GregorianDate methodsFor: 'datetime creation' stamp: 'HAW 1/16/2019 21:38:21'!
 at: aTimeOfDay
 
-	^GregorianDateTime 
-		date: self 
-		timeOfDay: aTimeOfDay ! !
+	^self atTimeOfDay: aTimeOfDay ! !
 
 !GregorianDate methodsFor: 'datetime creation'!
 atLastTimeOfDay
